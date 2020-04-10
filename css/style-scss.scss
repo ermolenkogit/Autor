@@ -1,0 +1,88 @@
+@import "style.css";
+@import "https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@300;400;600&display=swap";
+@import "fonts";
+
+%btn{
+  display: inline-block;
+  width: 225px;
+  line-height: 62px;
+  border: 3px solid #ffffff;
+  border-radius: 5px;
+
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  transition: background .3s linear;
+}
+
+//Team___________________________
+
+.team{
+  padding: 108px 0;
+}
+
+//Carts___________________________
+
+.carts{
+  padding: 115px 0 100px;
+  background-color: #f1f1f1;
+
+  .carts__inner{
+    display: flex;
+    justify-content: space-between;
+
+    .cart__item{
+      width: 370px;
+      text-align: center;
+      border-radius: 10px;
+      &:hover {
+        .cart__text {
+          &:first-of-type {
+            transition: background-color .2s linear;
+            background-color: #49cbcd;
+          }
+
+          .cart__btm {
+            transition: background-color .2s linear;
+            background-color: #49cbcd;
+          }
+        }
+      }
+      .cart__text{
+        font-size: 14px;
+        color: #8c9299;
+        background-color: #ffffff;
+        border-bottom: 1px solid #ecf0f1;
+
+        padding: 20px 0 15px;
+        &:first-of-type{
+          font-size: 26px;
+          color: #ffffff;
+          background-color: #485460;
+
+          padding: 28px 0;
+        }
+        &:nth-of-type(2){
+          font-size: 20px;
+          color: #485460;
+          background-color: #f8f9fb;
+
+          padding: 26px 0;
+        }
+        &:last-of-type{
+          background-color: #f8f9fb;
+          padding: 30px;
+          border-bottom: none;
+        }
+        .cart__btm{
+          @extend %btn;
+          font-size: 17px;
+          width: 170px;
+          line-height: 40px;
+          background-color: #788492;
+
+        }
+      }
+    }
+  }
+}
