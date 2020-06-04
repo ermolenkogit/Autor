@@ -1,8 +1,9 @@
 @import "style.css";
+@import "../fontawesome-free-5.0.8/web-fonts-with-css/css/fontawesome-all.css";
 @import "https://fonts.googleapis.com/css2?family=Lobster&family=Open+Sans:wght@300;400;600&display=swap";
 @import "fonts";
 
-%btn{
+%btn {
   display: inline-block;
   width: 225px;
   line-height: 62px;
@@ -15,72 +16,620 @@
   transition: background .3s linear;
 }
 
+//Переменные___________________________
+
+$text-color: #4e525d;
+$text-height: 1;
+$font-myriad: 'Myriad';
+
+//Mixin ______________________
+
+@mixin max-screen($res) {
+  @media screen and (max-width: $res) {
+    @content;
+  }
+}
+
+//@include max-screen(768px) {
+//  width: auto;
+//  margin: 0 0 60px;
+//}
+
+//Slider___________________________
+
+$numOfSlides: 5;
+$slidingAT: 1.3s;
+$controlSize: 60px;
+
+.slider {
+  position: relative;
+  height: 80vh;
+  overflow: hidden;
+
+  &__slides {
+    z-index: 1;
+    position: relative;
+    height: 100%;
+  }
+
+  &__control {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    width: $controlSize;
+    height: $controlSize;
+    margin-left: $controlSize/-2;
+    margin-top: $controlSize/-2;
+    border-radius: 50%;
+    background: #fff;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    @include max-screen(414px) {
+      left: 11%;
+    }
+
+    &--right {
+      left: 95%;
+      @include max-screen(414px) {
+        left: 89%;
+      }
+    }
+
+    &:hover {
+      background-color: #44c0c2;
+    }
+
+    &-line {
+      position: absolute;
+      left: 23px;
+      top: 50%;
+      width: 3px;
+      height: 14px;
+      transform-origin: 50% 0;
+      transform: rotate(-45deg);
+
+      &:nth-child(2) {
+        transform: translateY(1px) rotate(-135deg);
+      }
+
+      .slider__control--right & {
+        left: 37px;
+        transform-origin: 1px 0;
+        transform: rotate(45deg);
+
+        &:nth-child(2) {
+          transform: translateY(1px) rotate(135deg);
+        }
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #e2e2e2;
+        transition: background-color 0.3s;
+      }
+
+      .slider__control:hover &:after {
+        background-color: #fff;
+      }
+
+      .slider__control.a--rotation & {
+
+        &:after {
+          animation: arrowLineRotation 0.49s;
+        }
+
+        &:nth-child(1):after {
+          animation: arrowLineRotationRev 0.49s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes arrowLineRotation {
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes arrowLineRotationRev {
+  to {
+    transform: rotate(-180deg);
+  }
+}
+
+.slide {
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150vmax;
+  height: 150vmax;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  transition: clip-path 0s $slidingAT*0.7;
+  clip-path: circle($controlSize/2 at 120vw 50%);
+
+  &.s--prev {
+    clip-path: circle($controlSize/2 at 30vw 50%);
+  }
+
+  &.s--active {
+    z-index: 1;
+    transition: clip-path $slidingAT;
+    clip-path: circle(120vmax at 120vw 50%);
+
+    &.s--active-prev {
+      clip-path: circle(120vmax at 30vw 50%);
+    }
+  }
+
+  @for $i from 1 through $numOfSlides {
+    &:nth-child(#{$i}) {
+      .slide__inner {
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/onepgscr-#{$i+1}.jpg');
+      }
+    }
+  }
+
+  &__inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100vw;
+    height: 100vh;
+    margin-left: -50vw;
+    margin-top: -50vh;
+    background-size: cover;
+    background-position: center center;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+    }
+  }
+
+  &__content {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    margin-left: $controlSize/-2;
+    margin-top: $controlSize*0.8;
+    max-width: 480px;
+    color: #fff;
+    @include max-screen(414px) {
+      left: 15%;
+    }
+  }
+
+  &__heading {
+    margin-bottom: 20px;
+    font-size: 60px;
+    @include max-screen(414px) {
+      font-size: 35px;
+    }
+  }
+
+  &__text {
+    font-size: 25px;
+    @include max-screen(414px) {
+      font-size: 20px;
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+}
+
 //Team___________________________
 
-.team{
+.team {
   padding: 108px 0;
+  @include max-screen(768px) {
+    padding: 20px 0;
+  }
+
+  .team__title {
+    display: block;
+    text-align: center;
+    font-size: 42px;
+    color: $text-color;
+
+    margin-bottom: 120px;
+    @include max-screen(768px) {
+      margin-bottom: 0;
+    }
+  }
+
+  .team__inner {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    .team__item {
+      width: 270px;
+      text-align: center;
+
+      margin-top: 20px;
+
+      .team__photo {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        background-color: #eeeef0;
+        border-radius: 50%;
+        position: relative;
+
+        &:before {
+          display: block;
+          content: "\f067";
+          font-family: 'Font Awesome 5 Free';
+          font-weight: 900;
+          position: absolute;
+          font-size: 50px;
+          color: #f46d6d;
+          top: 50%;
+          left: 50%;
+          margin-left: -25px;
+          margin-top: -25px;
+          opacity: 0;
+          transition: .2s;
+        }
+
+        &:hover{
+          &:before{
+            opacity: 1;
+          }
+        }
+      }
+
+      .team__name {
+        font-size: 22px;
+        line-height: $text-height;
+        color: $text-color;
+        margin: 70px 0 12px;
+        @include max-screen(414px) {
+          margin: 40px 0 12px;
+        }
+      }
+
+      .team__profession {
+        font-size: 14px;
+        line-height: $text-height;
+        color: $text-color;
+        margin-bottom: 33px;
+      }
+
+      .team__text {
+        font-size: 14px;
+        line-height: 1.8;
+        color: $text-color;
+      }
+    }
+  }
 }
 
 //Carts___________________________
 
-.carts{
-  padding: 115px 0 100px;
+.carts {
+  padding: 115px 0 80px;
   background-color: #f1f1f1;
+  @include max-screen(414px) {
+    padding: 20px 0;
+  }
 
-  .carts__inner{
+  .carts__inner {
     display: flex;
     justify-content: space-between;
+    @include max-screen(414px) {
+      flex-direction: column;
+    }
 
-    .cart__item{
-      width: 370px;
+    .cart__item {
+      width: 32%;
       text-align: center;
       border-radius: 10px;
+      overflow: hidden;
+
+      margin-top: 20px;
+      @include max-screen(414px) {
+        width: auto;
+        margin-top: 45px;
+      }
+
       &:hover {
         .cart__text {
           &:first-of-type {
-            transition: background-color .2s linear;
             background-color: #49cbcd;
           }
 
-          .cart__btm {
-            transition: background-color .2s linear;
+          .cart__btn {
             background-color: #49cbcd;
           }
         }
       }
-      .cart__text{
+
+      .cart__text {
         font-size: 14px;
         color: #8c9299;
         background-color: #ffffff;
         border-bottom: 1px solid #ecf0f1;
 
         padding: 20px 0 15px;
-        &:first-of-type{
+        @include max-screen(414px) {
+          padding: 10px 0 15px;
+        }
+
+        &:first-of-type {
           font-size: 26px;
           color: #ffffff;
           background-color: #485460;
+          transition: .5s;
 
           padding: 28px 0;
+          @include max-screen(414px) {
+            padding: 15px 0;
+          }
         }
-        &:nth-of-type(2){
+
+        &:nth-of-type(2) {
           font-size: 20px;
           color: #485460;
           background-color: #f8f9fb;
 
           padding: 26px 0;
+          @include max-screen(414px) {
+            padding: 20px 0;
+          }
         }
-        &:last-of-type{
+
+        &:last-of-type {
           background-color: #f8f9fb;
           padding: 30px;
           border-bottom: none;
+          @include max-screen(414px) {
+            padding: 20px;
+          }
         }
-        .cart__btm{
+
+        .cart__btn {
           @extend %btn;
           font-size: 17px;
           width: 170px;
           line-height: 40px;
           background-color: #788492;
 
+        }
+      }
+    }
+  }
+}
+
+//Footer___________________________
+
+.contact {
+  background: url('../images/bg.jpg') no-repeat bottom;
+  background-size: cover;
+  position: relative;
+
+  padding: 105px 0 100px;
+  @include max-screen(414px) {
+    padding: 50px 0;
+  }
+
+  &:before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(24, 24, 24, .3);
+  }
+
+  .contact__title {
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 42px;
+    color: #FFFFFF;
+    line-height: $text-height;
+
+    margin-bottom: 115px;
+    @include max-screen(414px) {
+      margin-bottom: 50px;
+    }
+  }
+
+  .contact__inner {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .contact__support {
+      width: 440px;
+      @include max-screen(1024px) {
+        width: 40%;
+      }
+      @include max-screen(768px) {
+        width: 50%;
+      }
+      @include max-screen(414px) {
+        width: 100%;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .support__subtitle {
+        font-size: 24px;
+        color: #FFFFFF;
+        line-height: $text-height;
+
+        margin-bottom: 15px;
+      }
+
+      .support__text {
+        font-size: 14px;
+        color: #FFFFFF;
+        line-height: 1.5;
+        opacity: .5;
+
+        margin-bottom: 38px;
+      }
+
+      .support__social {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 42px;
+        width: 42px;
+        border-radius: 50%;
+        transition: background-color .2s linear;
+
+        margin: 0 8px 20px 0;
+
+        &:first-of-type {
+          background-color: #3b5997;
+        }
+
+        &:nth-of-type(2) {
+          background-color: #3ec2f3;
+        }
+
+        &:last-of-type {
+          background-color: #e44c41;
+        }
+
+        &:hover {
+          background-color: #FFFFFF;
+        }
+
+        i {
+          font-size: 22px;
+          color: #FFFFFF;
+        }
+
+        &:hover .icon--blue {
+          color: #3b5997;
+          transition: color .3s;
+        }
+
+        &:hover .icon--turquoise {
+          color: #3ec2f3;
+          transition: color .3s;
+        }
+
+        &:hover .icon--orange {
+          color: #e44c41;
+          transition: color .3s;
+        }
+      }
+
+      .support__address {
+        font-family: $font-myriad;
+        font-size: 14px;
+        color: #bface2;
+        line-height: 24px;
+      }
+    }
+
+    .contact__form {
+      @include max-screen(414px) {
+        width: 58%;
+      }
+      @include max-screen(414px) {
+        width: 100%;
+      }
+
+      .input__item {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 20px;
+        @include max-screen(768px) {
+          flex-direction: column;
+          margin-bottom: 0;
+        }
+
+        input{
+          display: inline-block;
+          width: 270px;
+          line-height: 44px;
+
+          font-family: "Raleway", "Open Sans", sans-serif;
+          font-size: 16px;
+          color: #c1c1c1;
+
+          border-radius: 5px;
+          border: none;
+          outline: none;
+
+          padding-left: 20px;
+          @include max-screen(768px) {
+            margin-bottom: 15px;
+            width: auto;
+          }
+        }
+      }
+
+      .form__message{
+        height: 180px;
+        width: 570px;
+
+        font-family: "Raleway", "Open Sans", sans-serif;
+        font-size: 16px;
+        color: #c1c1c1;
+
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        resize: none;
+
+        padding: 20px 0 0 20px;
+        margin-bottom: 30px;
+        @include max-screen(768px) {
+          width: 360px;
+        }
+        @include max-screen(414px) {
+          width: 100%;
+        }
+      }
+
+      .btn__item{
+        display: flex;
+        justify-content: flex-end;
+        .form__btn{
+          @extend %btn;
+          line-height: 50px;
+          width: 170px;
+          font-size: 22px;
+          font-weight: 100;
+
+          background-color: #49cbcd;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          @include max-screen(768px) {
+            margin: auto;
+          }
+
+          &:hover{
+            background-color: #44dfe1;
+          }
         }
       }
     }
