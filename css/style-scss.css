@@ -38,7 +38,8 @@
     border-radius: 50%;
     background: #fff;
     transition: background-color 0.3s;
-    cursor: pointer; }
+    cursor: pointer;
+    opacity: .8; }
     @media screen and (max-width: 414px) {
       .slider__control {
         left: 11%; } }
@@ -98,14 +99,26 @@
   border-radius: 50%;
   transition: clip-path 0s 0.91s;
   clip-path: circle(30px at 120vw 50%); }
+  @media screen and (max-width: 414px) {
+    .slide {
+      clip-path: circle(30px at 135vw 50%); } }
   .slide.s--prev {
     clip-path: circle(30px at 30vw 50%); }
+    @media screen and (max-width: 414px) {
+      .slide.s--prev {
+        clip-path: circle(30px at 135vw 50%); } }
   .slide.s--active {
     z-index: 1;
     transition: clip-path 1.3s;
     clip-path: circle(120vmax at 120vw 50%); }
+    @media screen and (max-width: 414px) {
+      .slide.s--active {
+        clip-path: circle(500px at 135vw 50%); } }
     .slide.s--active.s--active-prev {
       clip-path: circle(120vmax at 30vw 50%); }
+      @media screen and (max-width: 414px) {
+        .slide.s--active.s--active-prev {
+          clip-path: circle(500px at 135vw 50%); } }
   .slide:nth-child(1) .slide__inner {
     background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/onepgscr-2.jpg"); }
   .slide:nth-child(2) .slide__inner {
@@ -144,13 +157,15 @@
     color: #fff; }
     @media screen and (max-width: 414px) {
       .slide__content {
-        left: 15%; } }
+        left: 15%;
+        top: 58%; } }
   .slide__heading {
     margin-bottom: 20px;
     font-size: 60px; }
     @media screen and (max-width: 414px) {
       .slide__heading {
-        font-size: 35px; } }
+        font-size: 35px;
+        margin-bottom: 0; } }
   .slide__text {
     font-size: 25px; }
     @media screen and (max-width: 414px) {

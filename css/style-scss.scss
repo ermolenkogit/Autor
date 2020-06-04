@@ -65,6 +65,7 @@ $controlSize: 60px;
     background: #fff;
     transition: background-color 0.3s;
     cursor: pointer;
+    opacity: .8;
     @include max-screen(414px) {
       left: 11%;
     }
@@ -155,18 +156,30 @@ $controlSize: 60px;
   border-radius: 50%;
   transition: clip-path 0s $slidingAT*0.7;
   clip-path: circle($controlSize/2 at 120vw 50%);
+  @include max-screen(414px) {
+    clip-path: circle(30px at 135vw 50%);
+  }
 
   &.s--prev {
     clip-path: circle($controlSize/2 at 30vw 50%);
+    @include max-screen(414px) {
+      clip-path: circle(30px at 135vw 50%);
+    }
   }
 
   &.s--active {
     z-index: 1;
     transition: clip-path $slidingAT;
     clip-path: circle(120vmax at 120vw 50%);
+    @include max-screen(414px) {
+    clip-path: circle(500px at 135vw 50%);
+    }
 
     &.s--active-prev {
       clip-path: circle(120vmax at 30vw 50%);
+      @include max-screen(414px) {
+        clip-path: circle(500px at 135vw 50%);
+      }
     }
   }
 
@@ -210,6 +223,7 @@ $controlSize: 60px;
     color: #fff;
     @include max-screen(414px) {
       left: 15%;
+      top: 58%;
     }
   }
 
@@ -218,6 +232,7 @@ $controlSize: 60px;
     font-size: 60px;
     @include max-screen(414px) {
       font-size: 35px;
+      margin-bottom: 0;
     }
   }
 
