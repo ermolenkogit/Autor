@@ -101,19 +101,19 @@
   clip-path: circle(30px at 120vw 50%); }
   @media screen and (max-width: 414px) {
     .slide {
-      clip-path: circle(30px at 135vw 50%); } }
+      clip-path: circle(30px at 133vw 50%); } }
   .slide.s--prev {
     clip-path: circle(30px at 30vw 50%); }
     @media screen and (max-width: 414px) {
       .slide.s--prev {
-        clip-path: circle(30px at 135vw 50%); } }
+        clip-path: circle(30px at 133vw 50%); } }
   .slide.s--active {
     z-index: 1;
     transition: clip-path 1.3s;
     clip-path: circle(120vmax at 120vw 50%); }
     @media screen and (max-width: 414px) {
       .slide.s--active {
-        clip-path: circle(500px at 135vw 50%); } }
+        clip-path: circle(500px at 133vw 50%); } }
     .slide.s--active.s--active-prev {
       clip-path: circle(120vmax at 30vw 50%); }
       @media screen and (max-width: 414px) {
